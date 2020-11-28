@@ -853,7 +853,7 @@ class TerminalReporter:
                 values = domain.split("[")
                 values[0] = values[0].replace(".", "::")  # don't replace '.' in params
                 line += "[".join(values)
-            return line
+            return line.replace("::", ":{}::".format(lineno))
 
         # collect_fspath comes from testid which has a "/"-normalized path.
 
