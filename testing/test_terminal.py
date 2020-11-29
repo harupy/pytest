@@ -1010,10 +1010,13 @@ class TestTerminalFunctional:
             """
         )
         result = testdir.runpytest("--show-lineno", "--verbose")
-        result.stdout.fnmatch_lines([
-            "*test_show_lineno.py:0::test_func1 PASSED*",
-            "*test_show_lineno.py:4::TestClass::test_method PASSED*",
-        ])
+        result.stdout.fnmatch_lines(
+            [
+                "*test_show_lineno.py:0::test_func1 PASSED*",
+                "*test_show_lineno.py:4::TestClass::test_method PASSED*",
+            ]
+        )
+
 
 def test_fail_extra_reporting(testdir, monkeypatch):
     monkeypatch.setenv("COLUMNS", "80")
