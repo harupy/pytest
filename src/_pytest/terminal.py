@@ -862,7 +862,7 @@ class TerminalReporter:
                 line += "[".join(values)
 
             show_lineno = self.config.getoption("show_lineno")
-            return line.replace("::", ":{}::".format(lineno)) if show_lineno else line
+            return line.replace("::", ":{}::".format(lineno), 1) if show_lineno else line
 
         # collect_fspath comes from testid which has a "/"-normalized path.
 
