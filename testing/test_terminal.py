@@ -997,6 +997,23 @@ class TestTerminalFunctional:
         result.stdout.fnmatch_lines([expected])
         assert result.stdout.lines.count(expected) == 1
 
+    def test_show_lineno(self, testdir):
+        # QUESTION: is this the right place to define this test function?
+        testdir.makepyfile(
+            """
+            def test_func1():
+                pass
+
+            class TestClass(object):
+                def test_method(self):
+                    pass
+            """
+        )
+        result = testdir.runpytest("--show-lineno", "--verbose")
+        result.stdout.fnmatch_lines([
+            "*test_show_lineno.py:0::test_func1 PASSED*",
+            "*test_show_lineno.py:4::TestClass::test_method PASSED*",
+        ])
 
 def test_fail_extra_reporting(testdir, monkeypatch):
     monkeypatch.setenv("COLUMNS", "80")
