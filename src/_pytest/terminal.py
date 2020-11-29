@@ -216,6 +216,13 @@ def pytest_addoption(parser: Parser) -> None:
         help="Whether code should be highlighted (only if --color is also enabled)",
     )
 
+    group._addoption(
+        "--show-lineno",
+        action="store_true",
+        default=False,
+        help="show line number after test file path (e.g. 'test_abc.py:10')",
+    )
+
     parser.addini(
         "console_output_style",
         help='console output: "classic", or with additional progress information ("progress" (percentage) | "count").',
@@ -853,7 +860,9 @@ class TerminalReporter:
                 values = domain.split("[")
                 values[0] = values[0].replace(".", "::")  # don't replace '.' in params
                 line += "[".join(values)
-            return line.replace("::", ":{}::".format(lineno))
+
+            show_lineno = self.config.getoption("show_lineno")
+            return line.replace("::", ":{}::".format(lineno)) if show_lineno else line
 
         # collect_fspath comes from testid which has a "/"-normalized path.
 
