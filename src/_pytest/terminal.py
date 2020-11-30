@@ -996,9 +996,11 @@ class TerminalReporter:
             else:
                 for rep in reports:
                     msg = self._getfailureheadline(rep)
+                    print("::group::{}".format(msg))
                     self.write_sep("_", msg, red=True, bold=True)
                     self._outrep_summary(rep)
                     self._handle_teardown_sections(rep.nodeid)
+                    print("::endgroup::")
 
     def summary_errors(self) -> None:
         if self.config.option.tbstyle != "no":
